@@ -54,3 +54,19 @@ func EnvBrokerType() string {
 	}
 	return os.Getenv("BROKER_TYPE")
 }
+
+func EnvSearchType() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv("SEARCH_TYPE")
+}
+
+func EnvElasticURI() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv("ELASTIC_URI")
+}

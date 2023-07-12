@@ -8,6 +8,8 @@ import (
 	"product/config/db"
 	"product/config/db/mongo"
 	"product/config/env"
+	"product/config/search"
+	"product/config/search/elastic"
 )
 
 func ConnectDB() {
@@ -34,5 +36,14 @@ func ConnectBroker() {
 		broker.ConnectBroker(nats.NatsConfig{}, env.EnvNatsURI())
 	default:
 		broker.ConnectBroker(nats.NatsConfig{}, env.EnvNatsURI())
+	}
+}
+
+func ConnectSearch() {
+	switch env.EnvSearchType() {
+	case "elastic":
+		search.ConnectEngine(elastic.ElasticConfig{}, env.EnvElasticURI())
+	default:
+		search.ConnectEngine(elastic.ElasticConfig{}, env.EnvElasticURI())
 	}
 }

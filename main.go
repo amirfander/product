@@ -20,6 +20,8 @@ func main() {
 
 	config.ConnectBroker()
 
+	config.ConnectSearch()
+
 	//routes
 	routes.ProductRoute(router) //add this
 

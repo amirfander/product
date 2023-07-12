@@ -3,6 +3,7 @@ module product
 go 1.16
 
 require (
+	github.com/elastic/go-elasticsearch/v8 v8.8.2 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/gorilla/mux v1.8.0
