@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 
+	"product/broker"
 	"product/db"
 	"product/models"
 	"product/responses"
@@ -40,7 +41,8 @@ func CreateProduct() http.HandlerFunc {
 			json.NewEncoder(rw).Encode(response)
 			return
 		}
-
+		createdProduct, _ := json.Marshal(newProduct)
+		broker.Publish("Product.Created", createdProduct)
 		rw.WriteHeader(http.StatusCreated)
 		response := responses.Response{Status: http.StatusCreated, Message: "success", Data: map[string]interface{}{"data": result}}
 		json.NewEncoder(rw).Encode(response)

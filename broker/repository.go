@@ -8,4 +8,9 @@ func SetRepository(ri RepositoryInterface) RepositoryInterface {
 }
 
 type RepositoryInterface interface {
+	Publish(subject string, data []byte)
+}
+
+func Publish(subject string, data []byte) {
+	repository.Publish(subject, data)
 }
