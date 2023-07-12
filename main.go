@@ -18,6 +18,8 @@ func main() {
 
 	config.ConnectCache()
 
+	config.ConnectBroker()
+
 	//routes
 	routes.ProductRoute(router) //add this
 

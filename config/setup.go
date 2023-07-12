@@ -1,27 +1,38 @@
 package config
 
 import (
-	"product/config/cacheconfig"
-	"product/config/cacheconfig/redis"
-	"product/config/dbconfig"
-	"product/config/dbconfig/mongo"
+	"product/config/broker"
+	"product/config/broker/nats"
+	"product/config/cache"
+	"product/config/cache/redis"
+	"product/config/db"
+	"product/config/db/mongo"
 	"product/config/env"
 )
 
 func ConnectDB() {
 	switch env.EnvDBType() {
 	case "mongodb":
-		dbconfig.ConnectDB(mongo.MongoDBConfig{}, env.EnvMongoURI())
+		db.ConnectDB(mongo.MongoDBConfig{}, env.EnvMongoURI())
 	default:
-		dbconfig.ConnectDB(mongo.MongoDBConfig{}, env.EnvMongoURI())
+		db.ConnectDB(mongo.MongoDBConfig{}, env.EnvMongoURI())
 	}
 }
 
 func ConnectCache() {
 	switch env.EnvCacheType() {
 	case "redis":
-		cacheconfig.ConnectCache(redis.RedisConfig{}, env.EnvRedisURI())
+		cache.ConnectCache(redis.RedisConfig{}, env.EnvRedisURI())
 	default:
-		cacheconfig.ConnectCache(redis.RedisConfig{}, env.EnvRedisURI())
+		cache.ConnectCache(redis.RedisConfig{}, env.EnvRedisURI())
+	}
+}
+
+func ConnectBroker() {
+	switch env.EnvBrokerType() {
+	case "nats":
+		broker.ConnectBroker(nats.NatsConfig{}, env.EnvNatsURI())
+	default:
+		broker.ConnectBroker(nats.NatsConfig{}, env.EnvNatsURI())
 	}
 }

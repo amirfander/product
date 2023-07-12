@@ -1,4 +1,4 @@
-package cacheconfig
+package cache
 
 type CacheConfiger interface {
 	ConnectCache(uri string)

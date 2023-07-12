@@ -1,4 +1,4 @@
-package dbconfig
+package db
 
 type DBConfiger interface {
 	ConnectDB(uri string)

@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"product/dbrepository"
+	dbrepo "product/db"
 )
 
 type MongoDBConfig struct {
@@ -35,5 +35,5 @@ func (mdbc MongoDBConfig) ConnectDB(uri string) {
 	fmt.Println("Connected to MongoDB")
 
 	SetDB(client)
-	dbrepository.SetRepository(Mongo{})
+	dbrepo.SetRepository(Mongo{})
 }

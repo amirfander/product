@@ -38,3 +38,19 @@ func EnvRedisURI() string {
 	}
 	return os.Getenv("REDIS_URI")
 }
+
+func EnvNatsURI() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv("NATS_URI")
+}
+
+func EnvBrokerType() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv("BROKER_TYPE")
+}

@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"product/dbrepository"
+	"product/db"
 	"product/models"
 	"product/responses"
 )
@@ -33,7 +33,7 @@ func CreateProduct() http.HandlerFunc {
 			Tags:        product.Tags,
 			Description: product.Description,
 		}
-		result, err := dbrepository.InsertOne(ctx, newProduct, "products")
+		result, err := db.InsertOne(ctx, newProduct, "products")
 		if err != nil {
 			rw.WriteHeader(http.StatusInternalServerError)
 			response := responses.Response{Status: http.StatusInternalServerError, Message: "error", Data: map[string]interface{}{"data": err.Error()}}
@@ -55,7 +55,7 @@ func GetAProduct() http.HandlerFunc {
 		var product models.Product
 		defer cancel()
 
-		err := dbrepository.FindById(ctx, productId, "products", &product)
+		err := db.FindById(ctx, productId, "products", &product)
 		if err != nil {
 			rw.WriteHeader(http.StatusInternalServerError)
 			response := responses.Response{Status: http.StatusInternalServerError, Message: "error", Data: map[string]interface{}{"data": err.Error()}}
