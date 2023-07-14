@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	dbrepo "product/db"
+	dbrepo "product/repository/db"
 )
 
 type MongoDBConfig struct {

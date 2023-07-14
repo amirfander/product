@@ -3,7 +3,7 @@ package routes
 import (
 	"github.com/gorilla/mux"
 
-	"product/controllers"
+	"product/infrastructure/controllers"
 )
 
 func ProductRoute(router *mux.Router) {

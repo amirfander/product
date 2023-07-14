@@ -5,7 +5,7 @@ import (
 
 	"github.com/redis/go-redis/v9"
 
-	"product/cache"
+	"product/repository/cache"
 )
 
 type RedisConfig struct {

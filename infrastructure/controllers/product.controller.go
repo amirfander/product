@@ -9,11 +9,11 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"product/broker"
-	"product/db"
-	"product/models"
-	"product/responses"
-	searchrepo "product/search"
+	"product/infrastructure/responses"
+	models "product/model"
+	"product/repository/broker"
+	"product/repository/db"
+	searchrepo "product/repository/search"
 )
 
 func CreateProduct() http.HandlerFunc {

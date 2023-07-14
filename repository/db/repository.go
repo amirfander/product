@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"product/cache"
+	"product/repository/cache"
 )
 
 type RepositoryInterface interface {

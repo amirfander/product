@@ -5,7 +5,7 @@ import (
 
 	"github.com/nats-io/nats.go"
 
-	"product/broker"
+	"product/repository/broker"
 )
 
 type NatsConfig struct {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"product/config"
-	"product/routes"
+	"product/infrastructure/config"
+	"product/infrastructure/routes"
 )
 
 func main() {

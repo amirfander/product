@@ -1,15 +1,15 @@
 package config
 
 import (
-	"product/config/broker"
-	"product/config/broker/nats"
-	"product/config/cache"
-	"product/config/cache/redis"
-	"product/config/db"
-	"product/config/db/mongo"
-	"product/config/env"
-	"product/config/search"
-	"product/config/search/elastic"
+	"product/infrastructure/config/broker"
+	"product/infrastructure/config/broker/nats"
+	"product/infrastructure/config/cache"
+	"product/infrastructure/config/cache/redis"
+	"product/infrastructure/config/db"
+	"product/infrastructure/config/db/mongo"
+	"product/infrastructure/config/env"
+	"product/infrastructure/config/search"
+	"product/infrastructure/config/search/elastic"
 )
 
 func ConnectDB() {
