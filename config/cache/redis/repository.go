@@ -23,7 +23,7 @@ func (r Redis) Set(key string, document interface{}, expiration time.Duration) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	err = client.Set(ctx, key, jsonDoc, 0).Err()
+	err = client.Set(ctx, key, jsonDoc, expiration).Err()
 	if err != nil {
 		panic(err)
 	}

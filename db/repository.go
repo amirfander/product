@@ -8,13 +8,14 @@ import (
 )
 
 type RepositoryInterface interface {
-	InsertOne(ctx context.Context, document interface{}, collectionName string) (bool, error)
+	InsertOne(ctx context.Context, document interface{}, collectionName string) (string, error)
 	FindById(ctx context.Context, id string, collectionName string, result interface{}) error
+	Find(ctx context.Context, collectionName string, filter interface{}, skip int, limit int, result interface{}) error
 }
 
 var repository RepositoryInterface
 
-func InsertOne(ctx context.Context, document interface{}, collectionName string) (bool, error) {
+func InsertOne(ctx context.Context, document interface{}, collectionName string) (string, error) {
 	return repository.InsertOne(ctx, document, collectionName)
 }
 
@@ -27,9 +28,14 @@ func FindById(ctx context.Context, id string, collectionName string, result inte
 
 	res := repository.FindById(ctx, id, collectionName, result)
 	if res == nil {
-		cache.Set(cacheKey, result, 60*time.Millisecond)
+		cache.Set(cacheKey, result, time.Minute)
 	}
 	return res
+}
+
+func Find(ctx context.Context, collectionName string, filter interface{}, skip int, limit int, result interface{}) error {
+	err := repository.Find(ctx, collectionName, filter, skip, limit, result)
+	return err
 }
 
 func SetRepository(ri RepositoryInterface) RepositoryInterface {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -12,6 +13,7 @@ import (
 	"product/db"
 	"product/models"
 	"product/responses"
+	searchrepo "product/search"
 )
 
 func CreateProduct() http.HandlerFunc {
@@ -41,6 +43,8 @@ func CreateProduct() http.HandlerFunc {
 			json.NewEncoder(rw).Encode(response)
 			return
 		}
+		newProduct.Id = result
+		searchrepo.Create(ctx, result, newProduct, "products")
 		createdProduct, _ := json.Marshal(newProduct)
 		broker.Publish("Product.Created", createdProduct)
 		rw.WriteHeader(http.StatusCreated)
@@ -67,6 +71,33 @@ func GetAProduct() http.HandlerFunc {
 
 		rw.WriteHeader(http.StatusOK)
 		response := responses.Response{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": product}}
+		json.NewEncoder(rw).Encode(response)
+	}
+}
+
+func GetProducts() http.HandlerFunc {
+	return func(rw http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query()
+		limit, _ := strconv.Atoi(query.Get("limit"))
+		page, _ := strconv.Atoi(query.Get("page"))
+		search := query.Get("search")
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		var result []models.Product
+		if search != "" {
+			searchrepo.Search("products", search, &result, limit, (page-1)*limit)
+		} else {
+			err := db.Find(ctx, "products", nil, (page-1)*limit, limit, &result)
+			if err != nil {
+				rw.WriteHeader(http.StatusInternalServerError)
+				response := responses.Response{Status: http.StatusInternalServerError, Message: "error", Data: map[string]interface{}{"data": err.Error()}}
+				json.NewEncoder(rw).Encode(response)
+				return
+			}
+		}
+		rw.WriteHeader(http.StatusOK)
+		response := responses.Response{Status: http.StatusOK, Message: "success", Data: map[string]interface{}{"data": result}}
 		json.NewEncoder(rw).Encode(response)
 	}
 }
