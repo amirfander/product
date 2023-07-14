@@ -11,6 +11,8 @@ type RepositoryInterface interface {
 	InsertOne(ctx context.Context, document interface{}, collectionName string) (string, error)
 	FindById(ctx context.Context, id string, collectionName string, result interface{}) error
 	Find(ctx context.Context, collectionName string, filter interface{}, skip int, limit int, result interface{}) error
+	UpdateById(ctx context.Context, collectionName string, id string, document interface{}) error
+	DeleteById(ctx context.Context, collectionName string, id string) error
 }
 
 var repository RepositoryInterface
@@ -34,8 +36,15 @@ func FindById(ctx context.Context, id string, collectionName string, result inte
 }
 
 func Find(ctx context.Context, collectionName string, filter interface{}, skip int, limit int, result interface{}) error {
-	err := repository.Find(ctx, collectionName, filter, skip, limit, result)
-	return err
+	return repository.Find(ctx, collectionName, filter, skip, limit, result)
+}
+
+func UpdateById(ctx context.Context, collectionName string, id string, document interface{}) error {
+	return repository.UpdateById(ctx, collectionName, id, document)
+}
+
+func DeleteById(ctx context.Context, collectionName string, id string) error {
+	return repository.DeleteById(ctx, collectionName, id)
 }
 
 func SetRepository(ri RepositoryInterface) RepositoryInterface {

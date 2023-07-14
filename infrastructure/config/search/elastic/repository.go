@@ -1,6 +1,7 @@
 package elastic
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -42,5 +43,17 @@ func (e Elastic) Search(index string, search string, result interface{}, limit i
 	}
 	jsonResult, _ := json.Marshal(results)
 	json.Unmarshal(jsonResult, result)
-	fmt.Println(results...)
+}
+
+func (e Elastic) UpdateById(index string, id string, document interface{}) {
+	jsonData, _ := json.Marshal(document)
+	if _, err := client.Update(index, id, bytes.NewReader([]byte(fmt.Sprintf(`{"doc":%s}`, jsonData)))); err != nil {
+		fmt.Println(err)
+	}
+}
+
+func (e Elastic) DeleteById(index string, id string) {
+	if _, err := client.Delete(index, id); err != nil {
+		fmt.Println(err)
+	}
 }

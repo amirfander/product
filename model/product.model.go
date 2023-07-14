@@ -1,4 +1,4 @@
-package models
+package model
 
 type Product struct {
 	Id          string `json:",omitempty" bson:"_id,omitempty"`
