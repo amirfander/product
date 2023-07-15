@@ -27,8 +27,18 @@ func (e Elastic) Create(ctx context.Context, id string, document interface{}, in
 }
 
 func (e Elastic) Search(index string, search string, result interface{}, limit int, skip int) {
+	var buffer bytes.Buffer
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"query_string": map[string]interface{}{
+				"query": "*" + search + "*",
+			},
+		},
+	}
+	json.NewEncoder(&buffer).Encode(query)
 	req := esapi.SearchRequest{
 		Index: []string{index},
+		Body:  &buffer,
 		From:  &skip,
 		Size:  &limit,
 	}
